@@ -5,7 +5,7 @@ export const superAdminGuard = (req, res, next) => {
     const user = req?.user;
 
     if (user && user.role === "superadmin") {
-      next();
+      return next();
     }
 
     return errorResponse(res, 403, `Access denied for role ${user.role}`);

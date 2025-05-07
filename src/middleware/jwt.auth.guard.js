@@ -25,11 +25,11 @@ export const jwtAuthMiddleware = (req, res, next) => {
     }
 
     req.user = {
-      sub: data._id,
+      sub: data.sub,
       role: data.role,
     };
 
-    next();
+    return next();
   } catch (error) {
     return errorResponse(res, 500, error.message);
   }

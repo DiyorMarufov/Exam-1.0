@@ -5,14 +5,14 @@ const accessTokenTime = process.env.ACCESS_TOKEN_TIME;
 const refreshTokenTime = process.env.REFRESH_TOKEN_TIME;
 
 export const generateToken = {
-  accessToken: (payload) => {
+  access: (payload) => {
     const accessToken = jwt.sign(payload, secret, {
       expiresIn: accessTokenTime,
     });
     return accessToken;
   },
 
-  refreshToken: (payload) => {
+  refresh: (payload) => {
     const refreshToken = jwt.sign(payload, secret, {
       expiresIn: refreshTokenTime,
     });
