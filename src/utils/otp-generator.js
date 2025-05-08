@@ -2,7 +2,7 @@ import speakeasy from "speakeasy";
 
 import { User } from "../models/index.js";
 
-export const otp = {
+export const otp_generator = {
   generateOtp: async (userId) => {
     const secret = speakeasy.generateSecret({ length: 20 });
 

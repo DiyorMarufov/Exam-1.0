@@ -37,7 +37,8 @@ export const userUpdateValidation = (data) => {
       otpSecret: z.string().optional(),
       otpEnabled: z.boolean().default(false).optional(),
     })
-    .partial();
+    .partial()
+    .strict();
 
   const parsed = user.safeParse(data);
 

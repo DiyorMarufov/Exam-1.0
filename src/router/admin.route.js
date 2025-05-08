@@ -23,10 +23,12 @@ router
   .post("/signinAdmin", controller.signInAdmin)
   .post("/accessTokenAdmin", controller.accessTokenAdmin)
   .post("/signoutAdmin", jwtAuthMiddleware, controller.signoutAdmin)
-  .get("/admins", jwtAuthMiddleware, superAdminGuard, controller.getAllAdmins)
-  .patch("/admin/:id", jwtAuthMiddleware, selfGuard, controller.updateAdminById)
+  .get("/", jwtAuthMiddleware, superAdminGuard, controller.getAllAdmins)
+  .get("/users", jwtAuthMiddleware, selfGuard, controller.getAllUsers)
+  .get("/teachers", jwtAuthMiddleware, selfGuard, controller.getAllTeachers)
+  .patch("/:id", jwtAuthMiddleware, selfGuard, controller.updateAdminById)
   .delete(
-    "/admin/:id",
+    "/:id",
     jwtAuthMiddleware,
     superAdminGuard,
     controller.deleteAdminById

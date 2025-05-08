@@ -145,15 +145,15 @@ export class AdminController {
         return errorResponse(res, 401, `Refresh token admin not found`);
       }
 
-      const { data } = verifyToken(refreshTokenCookie);
+      const { info } = verifyToken(refreshTokenCookie);
 
-      if (!data) {
+      if (!info) {
         return errorResponse(res, 401, `Invalid data`);
       }
 
       const payload = {
-        sub: data._id,
-        role: data.role,
+        sub: info._id,
+        role: info.role,
       };
       const accessToken = generateToken.access(payload);
       const refreshToken = generateToken.refresh(payload);
@@ -173,9 +173,9 @@ export class AdminController {
         return errorResponse(res, 401, `Refresh token admin not found`);
       }
 
-      const { data } = verifyToken(refreshTokenCookie);
+      const { info } = verifyToken(refreshTokenCookie);
 
-      if (!data) {
+      if (!info) {
         return errorResponse(res, 401, `Invalid data`);
       }
 
@@ -197,6 +197,26 @@ export class AdminController {
     }
   }
 
+  async getAllTeachers(__, res) {
+    try {
+      const authors = await User.find({ role: "author" });
+
+      return successResponse(res, 200, `success`, authors);
+    } catch (error) {
+      return errorResponse(res, 500, error.message);
+    }
+  }
+
+  async getAllUsers(__, res) {
+    try {
+      const users = await User.find({ role: "user" });
+
+      return successResponse(res, 200, `success`, users);
+    } catch (error) {
+      return errorResponse(res, 500, error.message);
+    }
+  }
+  
   async updateAdminById(req, res) {
     try {
       const { id } = req.params;

@@ -22,3 +22,29 @@ export const enrollmentValidation = (data) => {
     data: enrollment.data,
   };
 };
+
+export const enrollmentUpdateValidation = (data) => {
+  const enrollment = z
+    .object({
+      userId: z.string(),
+      courseId: z.string(),
+    })
+    .partial()
+    .strict();
+
+  const parsed = enrollment.safeParse(data);
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      errors: parsed.error.errors,
+      data: null,
+    };
+  }
+
+  return {
+    success: true,
+    errors: null,
+    data: parsed.data,
+  };
+};

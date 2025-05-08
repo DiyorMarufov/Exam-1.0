@@ -14,7 +14,7 @@ export const jwtAuthMiddleware = (req, res, next) => {
       return errorResponse(res, 400, `Invalid type or token not found`);
     }
 
-    const { valid, expired, data } = verifyToken(token);
+    const { valid, expired, info } = verifyToken(token);
 
     if (!valid) {
       return errorResponse(
@@ -25,8 +25,8 @@ export const jwtAuthMiddleware = (req, res, next) => {
     }
 
     req.user = {
-      sub: data.sub,
-      role: data.role,
+      sub: info.sub,
+      role: info.role,
     };
 
     return next();

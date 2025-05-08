@@ -26,13 +26,13 @@ export const verifyToken = (token) => {
     return {
       valid: true,
       expired: false,
-      data: verifiedData,
+      info: verifiedData,
     };
   } catch (error) {
     return {
       valid: false,
       expired: true,
-      data: null,
+      info: null,
     };
   }
 };
