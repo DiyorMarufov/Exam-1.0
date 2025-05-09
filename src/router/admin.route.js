@@ -26,6 +26,7 @@ router
   .get("/", jwtAuthMiddleware, superAdminGuard, controller.getAllAdmins)
   .get("/users", jwtAuthMiddleware, selfGuard, controller.getAllUsers)
   .get("/teachers", jwtAuthMiddleware, selfGuard, controller.getAllTeachers)
+  .get("/stats", jwtAuthMiddleware, selfGuard, controller.showStats)
   .patch("/:id", jwtAuthMiddleware, selfGuard, controller.updateAdminById)
   .delete(
     "/:id",

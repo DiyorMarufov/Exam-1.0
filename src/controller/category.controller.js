@@ -29,7 +29,7 @@ export class CategoryController {
 
   async getAllCategories(__, res) {
     try {
-      const categories = await Category.find();
+      const categories = await Category.find().populate("course");
 
       return successResponse(res, 200, `success`, categories);
     } catch (error) {
@@ -86,7 +86,7 @@ export class CategoryController {
       return errorResponse(res, 400, `ID not found`);
     }
 
-    const category = await Category.findById(id);
+    const category = await Category.findById(id).populate("course");
 
     if (!category) {
       return errorResponse(res, 404, `Category not found`);

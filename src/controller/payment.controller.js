@@ -1,4 +1,4 @@
-import { Payment } from "../models/index.js";
+import { Course, Payment, User } from "../models/index.js";
 import { errorResponse, successResponse } from "../utils/index.js";
 import {
   paymentUpdateValidation,
@@ -15,6 +15,22 @@ export class PaymentController {
       }
 
       const { userId, courseId, amount, status, paymentMethod } = data;
+
+      const user = await User.findById(userId);
+
+      if (!user) {
+        return errorResponse(res, 404, `User not found`);
+      }
+
+      const course = await Course.findById(courseId);
+
+      if (!course) {
+        return errorResponse(
+          res,
+          404,
+          `Course with ID ${course._id} not found`
+        );
+      }
 
       const newPayment = await Payment.create({
         userId,

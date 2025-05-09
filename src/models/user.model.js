@@ -34,7 +34,13 @@ const userSchema = new Schema(
       required: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+userSchema.virtual("enrollment",{
+  ref: "Enrollment",
+  localField: "_id",
+  foreignField: "userId"
+})
 
 export const User = model(constants.user, userSchema);

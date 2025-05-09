@@ -1,4 +1,4 @@
-import { Enrollment, User } from "../models/index.js";
+import { Course, Enrollment, User } from "../models/index.js";
 import {
   errorResponse,
   successResponse,
@@ -32,8 +32,18 @@ export class EnrollmentController {
           expired ? `Token expired` : `Invalid token`
         );
       }
-
+      
       const user = await User.findById(info.sub);
+      const course = await Course.findById(courseId);
+
+      if (!course) {
+        return errorResponse(
+          res,
+          404,
+          `Course with ID ${course._id} not found`
+        );
+      }
+
       await sendEmail(
         user.email,
         `Course Enrollment`,

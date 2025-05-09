@@ -8,10 +8,10 @@ const router = Router();
 const controller = new ReviewController();
 
 router
-  .post("/", jwtAuthMiddleware, selfGuard, controller.createReview)
+  .post("/", jwtAuthMiddleware, controller.createReview)
   .get("/", jwtAuthMiddleware, selfGuard, controller.getAllReviews)
-  .get("/:id", jwtAuthMiddleware, selfGuard, controller.getReviewById)
-  .patch("/:id", jwtAuthMiddleware, selfGuard, controller.updateReviewById)
-  .delete("/:id", jwtAuthMiddleware, selfGuard, controller.deleteReviewById);
+  .get("/:id", jwtAuthMiddleware, controller.getReviewById)
+  .patch("/:id", jwtAuthMiddleware, controller.updateReviewById)
+  .delete("/:id", jwtAuthMiddleware, controller.deleteReviewById);
 
 export { router as reviewRouter };

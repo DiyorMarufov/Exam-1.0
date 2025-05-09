@@ -8,9 +8,9 @@ const router = Router();
 const controller = new CourseController();
 
 router
-  .post("/", jwtAuthMiddleware, selfGuard, controller.createCourse)
-  .get("/", jwtAuthMiddleware, selfGuard, controller.getAllCourses)
-  .get("/:id", jwtAuthMiddleware, selfGuard, controller.getCourseById)
+  .post("/", jwtAuthMiddleware, controller.createCourse)
+  .get("/", jwtAuthMiddleware, controller.getAllCourses)
+  .get("/:id", jwtAuthMiddleware, controller.getCourseById)
   .patch("/:id", jwtAuthMiddleware, selfGuard, controller.updateCourseById)
   .delete("/:id", jwtAuthMiddleware, selfGuard, controller.deleteCourseById);
 

@@ -1,4 +1,4 @@
-import { User } from "../models/index.js";
+import { User, Course, Enrollment } from "../models/index.js";
 import {
   errorResponse,
   successResponse,
@@ -209,14 +209,33 @@ export class AdminController {
 
   async getAllUsers(__, res) {
     try {
-      const users = await User.find({ role: "user" });
+      const users = await User.find({ role: "user" }).populate({
+        path: "enrollment",
+        populate: [{ path: "courseId" }],
+      });
 
       return successResponse(res, 200, `success`, users);
     } catch (error) {
       return errorResponse(res, 500, error.message);
     }
   }
-  
+
+  async showStats(__, res) {
+    try {
+      const allUsers = (await User.find({ role: "user" })).length;
+      const courses = (await Course.find()).length;
+      const enrollments = (await Enrollment.find()).length;
+
+      return successResponse(res, 200, `success`, {
+        allUsers,
+        courses,
+        enrollments,
+      });
+    } catch (error) {
+      return errorResponse(res, 500, error.message);
+    }
+  }
+
   async updateAdminById(req, res) {
     try {
       const { id } = req.params;

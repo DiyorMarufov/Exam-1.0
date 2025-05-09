@@ -1,4 +1,4 @@
-import { Review } from "../models/index.js";
+import { Course, Review, User } from "../models/index.js";
 import { errorResponse, successResponse } from "../utils/index.js";
 import {
   reviewUpdateValidation,
@@ -15,6 +15,22 @@ export class ReviewController {
       }
 
       const { userId, courseId, rating, comment } = data;
+
+      const user = await User.findById(userId);
+
+      if (!user) {
+        return errorResponse(res, 404, `User not found`);
+      }
+
+      const course = await Course.findById(courseId);
+
+      if (!course) {
+        return errorResponse(
+          res,
+          404,
+          `Course with ID ${course._id} not found`
+        );
+      }
 
       const newReview = await Review.create({
         userId,

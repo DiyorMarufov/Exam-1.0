@@ -8,9 +8,9 @@ const router = Router();
 const controller = new EnrollmentController();
 
 router
-  .post("/", jwtAuthMiddleware, selfGuard, controller.createEnrollment)
+  .post("/", jwtAuthMiddleware, controller.createEnrollment)
   .get("/", jwtAuthMiddleware, selfGuard, controller.getAllEnrollments)
-  .get("/:id", jwtAuthMiddleware, selfGuard, controller.getEnrollmentById)
+  .get("/:id", jwtAuthMiddleware, controller.getEnrollmentById)
   .patch("/:id", jwtAuthMiddleware, selfGuard, controller.updateEnrollmentById)
   .delete(
     "/:id",
