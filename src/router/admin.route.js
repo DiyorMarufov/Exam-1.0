@@ -12,8 +12,24 @@ const router = Router();
 const controller = new AdminController();
 
 router
+  // superadmin
   .post("/signupSuperadmin", controller.createSuperAdmin)
   .post("/signinSuperadmin", controller.signinSuperAdmin)
+  .get("/", jwtAuthMiddleware, superAdminGuard, controller.getAllAdmins)
+  .patch(
+    "/superadmin/:id",
+    jwtAuthMiddleware,
+    superAdminGuard,
+    controller.updateAdminById
+  )
+  .delete(
+    "/superadmin/:id",
+    jwtAuthMiddleware,
+    superAdminGuard,
+    controller.deleteAdminById
+  )
+
+  // admin
   .post(
     "/signupAdmin",
     jwtAuthMiddleware,
@@ -23,16 +39,16 @@ router
   .post("/signinAdmin", controller.signInAdmin)
   .post("/accessTokenAdmin", controller.accessTokenAdmin)
   .post("/signoutAdmin", jwtAuthMiddleware, controller.signoutAdmin)
-  .get("/", jwtAuthMiddleware, superAdminGuard, controller.getAllAdmins)
-  .get("/users", jwtAuthMiddleware, selfGuard, controller.getAllUsers)
-  .get("/teachers", jwtAuthMiddleware, selfGuard, controller.getAllTeachers)
-  .get("/stats", jwtAuthMiddleware, selfGuard, controller.showStats)
-  .patch("/:id", jwtAuthMiddleware, selfGuard, controller.updateAdminById)
+  .patch("/admin/:id", jwtAuthMiddleware, selfGuard, controller.updateAdminById)
   .delete(
-    "/:id",
+    "/admin/:id",
     jwtAuthMiddleware,
     superAdminGuard,
     controller.deleteAdminById
-  );
+  )
+
+  .get("/users", jwtAuthMiddleware, selfGuard, controller.getAllUsers)
+  .get("/teachers", jwtAuthMiddleware, selfGuard, controller.getAllTeachers)
+  .get("/stats", jwtAuthMiddleware, selfGuard, controller.showStats);
 
 export { router as adminRouter };
